@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from wagnerfischerpp import WagnerFischer
-from owm import OWMWeatherConditions
-from snips import SnipsWeatherConditions, mappings
+from snipsowm.wagnerfischerpp import WagnerFischer
+from snipsowm.owm import OWMWeatherConditions
+from snipsowm.snips import SnipsWeatherConditions, mappings
 import random
-from utils import _convert_to_unix_case
-from weather import WeatherConditions
+from snipsowm.utils import _convert_to_unix_case
+from snipsowm.weather import WeatherConditions
 
 
 class WeatherConditionDescriptor(object):
@@ -266,4 +266,4 @@ class SlotValueResolver(object):
 
 
 if __name__ == "__main__":
-    print SlotValueResolver().fuzzy_match("fr_FR", u'HUMID')
+    print(SlotValueResolver().fuzzy_match("fr_FR", u'HUMID'))

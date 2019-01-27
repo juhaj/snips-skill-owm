@@ -2,7 +2,7 @@
 import datetime
 import json
 import requests
-from weather_provider import WeatherProvider, WeatherProviderError, WeatherProviderConnectivityError, WeatherProviderInvalidAPIKey
+from snipsowm.provider.weather_provider import WeatherProvider, WeatherProviderError, WeatherProviderConnectivityError, WeatherProviderInvalidAPIKey
 
 
 class OWMWeatherProvider(WeatherProvider):

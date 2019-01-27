@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*-: coding utf-8 -*-
 
-import ConfigParser
+import configparser
 from datetime import datetime
 import datetime as dt
 from dateutil.parser import parse
@@ -24,7 +24,7 @@ DIR = os.path.dirname(os.path.realpath(__file__)) + '/alarm/'
 lang = "EN"
 
 
-class SnipsConfigParser(ConfigParser.SafeConfigParser):
+class SnipsConfigParser(configparser.ConfigParser):
     def to_dict(self):
         return {section: {option_name : option for option_name, option in self.items(section)} for section in self.sections()}
 
@@ -34,44 +34,44 @@ def read_configuration_file(configuration_file):
             conf_parser = SnipsConfigParser()
             conf_parser.readfp(f)
             return conf_parser.to_dict()
-    except (IOError, ConfigParser.Error) as e:
+    except (IOError, configparser.Error) as e:
         return dict()
 
 def getCondition(snips):
       # Determine condition
     if snips.slots.forecast_condition_name:
         res = snips.slots.forecast_condition_name[0].slot_value.value.value
-        return unicode(res)
+        return str(res)
     return None
 
 def getLocality(snips):
     if snips.slots.forecast_locality:
         res = snips.slots.forecast_locality[0].slot_value.value.value
-        return unicode(res)
+        return str(res)
     return None
 
 def getRegion(snips):
     if snips.slots.forecast_region:
         res = snips.slots.forecast_region[0].slot_value.value.value
-        return unicode(res)
+        return str(res)
     return None
 
 def getCountry(snips):
     if snips.slots.forecast_country :
         res = snips.slots.forecast_country[0].slot_value.value.value
-        return unicode(res)
+        return str(res)
     return None
 
 def getPOI(snips):
     if snips.slots.forecast_geographical_poi:
         res = snips.slots.forecast_geographical_poi[0].slot_value.value.value
-        return unicode(res)
+        return str(res)
     return None
 
 def getItemName(snips):
     if snips.slots.forecast_item:
         res = snips.slots.forecast_item[0].slot_value.value.value
-        return unicode(res)
+        return str(res)
     return None
 
 def getDateTime(snips):
@@ -101,7 +101,7 @@ def getAnyLocality(snips):
           or snips.slots.forecast_geographical_poi
 
         if locality:
-          return unicode(locality[0].slot_value.value.value)
+          return str(locality[0].slot_value.value.value)
       except Exception:
         pass
 
@@ -180,22 +180,22 @@ if __name__ == "__main__":
     config = read_configuration_file("config.ini")
 
     if config.get("secret").get("api_key") is None:
-        print "No API key in config.ini, you must setup an OpenWeatherMap API key for this skill to work"
+        print("No API key in config.ini, you must setup an OpenWeatherMap API key for this skill to work")
     elif len(config.get("secret").get("api_key")) == 0:
-        print "No API key in config.ini, you must setup an OpenWeatherMap API key for this skill to work"
+        print("No API key in config.ini, you must setup an OpenWeatherMap API key for this skill to work")
     
-    skill_locale = config.get("secret", {"locale":"en_US"}).get("locale", u"en_US")
+    skill_locale = config.get("secret", {"locale":"en_US"}).get("locale", "en_US")
     
-    if skill_locale == u"":
-        print "No locale information is found!"
-        print "Please edit 'config.ini' file, give either en_US, fr_FR or es_ES refering to the language of your assistant"
+    if skill_locale == "":
+        print("No locale information is found!")
+        print("Please edit 'config.ini' file, give either en_US, fr_FR or es_ES refering to the language of your assistant")
         sys.exit(1)
         
     skill = SnipsOWM(config["secret"]["api_key"],
-            config["secret"]["default_location"],locale=skill_locale.decode('ascii'))
+                     config["secret"]["default_location"],locale=skill_locale)
     
     lang = "EN"
-    with Hermes(MQTT_ADDR.encode("ascii")) as h:
+    with Hermes(MQTT_ADDR) as h:
         h.skill = skill
         h.subscribe_intent("searchWeatherForecastItem",
                            searchWeatherForecastItem) \

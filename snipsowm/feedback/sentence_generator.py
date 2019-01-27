@@ -3,7 +3,7 @@ import abc
 import collections
 from enum import Enum
 import locale
-import sentence_generation_utils as utils
+import snipsowm.feedback.sentence_generation_utils as utils
 import random
 
 
@@ -170,8 +170,8 @@ class AnswerSentenceGenerator(SentenceGenerator):
         try:  # Careful, this operation is not thread safe ...
             locale.setlocale(locale.LC_TIME, full_locale)
         except locale.Error:
-            print "Careful! There was an error while trying to set the locale {}. This means your locale is not properly installed. Please refer to the README for more information.".format(full_locale)
-            print "Some information displayed might not be formated to your locale"
+            print("Careful! There was an error while trying to set the locale {}. This means your locale is not properly installed. Please refer to the README for more information.".format(full_locale))
+            print("Some information displayed might not be formated to your locale")
 
         return utils.date_to_string(date, granularity)
 

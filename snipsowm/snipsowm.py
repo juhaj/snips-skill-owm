@@ -2,11 +2,11 @@
 """ OpenWeatherMap skill for Snips. """
 
 import datetime
-from feedback.sentence_generator import AnswerSentenceGenerator, ConditionQuerySentenceGenerator, \
+from snipsowm.feedback.sentence_generator import AnswerSentenceGenerator, ConditionQuerySentenceGenerator, \
     TemperatureQuerySentenceGenerator, SentenceGenerationLocaleException
-from provider.owm_provider import OWMWeatherProvider
-from provider.weather_provider import WeatherProviderError, WeatherProviderConnectivityError, WeatherProviderInvalidAPIKey
-import weather_condition
+from snipsowm.provider.owm_provider import OWMWeatherProvider
+from snipsowm.provider.weather_provider import WeatherProviderError, WeatherProviderConnectivityError, WeatherProviderInvalidAPIKey
+import snipsowm.weather_condition
 
 
 class SnipsOWM:
